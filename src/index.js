@@ -1,5 +1,21 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { MuiThemeProvider, createMuiTheme } from 'material-ui/styles';
+import { blueGrey } from 'material-ui/colors';
 import App from './App';
 
-ReactDOM.render(<App />, document.getElementById('root'));
+import './index.css';
+
+const theme = createMuiTheme({
+  palette: {
+    type: 'dark',
+    primary: blueGrey,
+  },
+});
+
+ReactDOM.render(
+  <MuiThemeProvider theme={theme}>
+    <App />
+  </MuiThemeProvider>,
+  document.getElementById('root'),
+);
