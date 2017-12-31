@@ -14,6 +14,10 @@ module.exports = {
           plugins: ['transform-react-jsx'],
         },
       },
+      {
+        test: /\.css$/,
+        loaders: ['style-loader', 'css-loader'],
+      },
     ],
   },
 };
