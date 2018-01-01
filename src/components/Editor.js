@@ -17,17 +17,29 @@ const styles = theme => ({
     height: 'calc(98% - 56px)',
     marginTop: 56,
     [theme.breakpoints.up('sm')]: {
-      height: 'calc(100% - 64px)',
-      marginTop: 64,
+      height: 'calc(100% - 48px)',
+      marginTop: 48,
     },
   },
-  textArea: {
+  title: {
+    width: '95%',
+    border: 0,
+    borderBottom: '1px solid rgba(0, 0, 0, 0.12)',
+    fontSize: 22,
+    padding: 10,
+    marginBottom: 10,
+  },
+  editor: {
     width: '50%',
     height: '97%',
+    borderRight: '1px solid rgba(0, 0, 0, 0.12)',
+  },
+  textArea: {
+    width: '99%',
+    height: '90%',
     resize: 'none',
     fontSize: 14,
     border: 0,
-    borderRight: '1px solid rgba(0, 0, 0, 0.12)',
   },
   preview: {
     padding: 10,
@@ -50,11 +62,14 @@ class Editor extends React.Component {
     const { classes } = this.props;
     return (
       <div className={classes.container}>
-        <textarea
-          className={classes.textArea}
-          value={this.state.text}
-          onChange={this.onChange.bind(this)}
-        />
+        <div className={classes.editor}>
+          <input className={classes.title} type="text" placeholder="Untitled" />
+          <textarea
+            className={classes.textArea}
+            value={this.state.text}
+            onChange={this.onChange.bind(this)}
+          />
+        </div>
         <div id="preview" className={classes.preview}>
           {
             remark()

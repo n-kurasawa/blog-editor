@@ -9,6 +9,10 @@ html, body {
     height: 100%;
 }
 
-textarea:focus {
+textarea:focus, input:focus {
     outline: 0px;
+}
+
+::placeholder {
+    color: rgba(0, 0, 0, 0.25);
 }
