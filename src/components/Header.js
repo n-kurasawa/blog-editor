@@ -6,10 +6,12 @@ const drawerWidth = 240;
 
 const styles = theme => ({
   appBar: {
-    backgroundColor: theme.palette.primary[900],
     width: `calc(100% - ${drawerWidth}px)`,
     marginLeft: drawerWidth,
     position: 'absolute',
+    backgroundColor: '#fafafa',
+    boxShadow: '0 0 0 0',
+    borderBottom: '1px solid rgba(0, 0, 0, 0.12)',
   },
 });
 

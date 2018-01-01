@@ -14,7 +14,7 @@ const styles = theme => ({
     display: 'flex',
     width: '100%',
     padding: theme.spacing.unit,
-    height: 'calc(100% - 56px)',
+    height: 'calc(98% - 56px)',
     marginTop: 56,
     [theme.breakpoints.up('sm')]: {
       height: 'calc(100% - 64px)',
@@ -24,8 +24,10 @@ const styles = theme => ({
   textArea: {
     width: '50%',
     height: '97%',
-    resize: 'vertical',
+    resize: 'none',
     fontSize: 14,
+    border: 0,
+    borderRight: '1px solid rgba(0, 0, 0, 0.12)',
   },
   preview: {
     padding: 10,

@@ -9,8 +9,7 @@ const styles = theme => ({
     position: 'relative',
     height: '100%',
     width: drawerWidth,
-    backgroundColor: theme.palette.primary[900],
-    color: theme.palette.primary[50],
+    backgroundColor: '#fafafa',
   },
   drawerHeader: theme.mixins.toolbar,
 });
@@ -21,6 +20,7 @@ const SideBar = ({ classes }) => (
     classes={{
       paper: classes.drawerPaper,
     }}
+    anchor="left"
   >
     <div className={classes.drawerHeader} />
     <Divider />

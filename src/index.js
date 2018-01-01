@@ -8,7 +8,6 @@ import './index.css';
 
 const theme = createMuiTheme({
   palette: {
-    type: 'dark',
     primary: blueGrey,
   },
 });
