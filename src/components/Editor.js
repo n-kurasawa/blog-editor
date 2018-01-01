@@ -1,4 +1,5 @@
 import React from 'react';
+import { withStyles } from 'material-ui/styles';
 import remark from 'remark';
 import reactRenderer from 'remark-react';
 import breaksRenderer from 'remark-breaks';
@@ -8,26 +9,32 @@ import js from 'highlight.js/lib/languages/javascript';
 
 import './Editor.css';
 
-const styles = {
+const styles = theme => ({
   container: {
     display: 'flex',
-    height: '100%',
-    margin: 5,
+    width: '100%',
+    padding: theme.spacing.unit,
+    height: 'calc(100% - 56px)',
+    marginTop: 56,
+    [theme.breakpoints.up('sm')]: {
+      height: 'calc(100% - 64px)',
+      marginTop: 64,
+    },
   },
   textArea: {
     width: '50%',
-    height: '90%',
+    height: '97%',
     resize: 'vertical',
     fontSize: 14,
   },
   preview: {
     padding: 10,
     width: '50%',
-    height: '90%',
+    height: '97%',
   },
-};
+});
 
-export default class Editor extends React.Component {
+class Editor extends React.Component {
   constructor(props) {
     super(props);
     this.state = { text: '# hello world' };
@@ -38,14 +45,15 @@ export default class Editor extends React.Component {
   }
 
   render() {
+    const { classes } = this.props;
     return (
-      <div style={styles.container}>
+      <div className={classes.container}>
         <textarea
-          style={styles.textArea}
+          className={classes.textArea}
           value={this.state.text}
           onChange={this.onChange.bind(this)}
         />
-        <div id="preview" style={styles.preview}>
+        <div id="preview" className={classes.preview}>
           {
             remark()
               .use(breaksRenderer)
@@ -64,3 +72,5 @@ export default class Editor extends React.Component {
     );
   }
 }
+
+export default withStyles(styles)(Editor);
