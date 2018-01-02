@@ -48,6 +48,14 @@ const styles = theme => ({
   },
 });
 
+const processor = remark()
+  .use(breaksRenderer)
+  .use(reactRenderer, {
+    remarkReactComponents: {
+      code: RemarkLowlight({ js }),
+    },
+  });
+
 class Editor extends React.Component {
   constructor(props) {
     super(props);
@@ -72,17 +80,10 @@ class Editor extends React.Component {
         </div>
         <div id="preview" className={classes.preview}>
           {
-            remark()
-              .use(breaksRenderer)
-              .use(reactRenderer, {
-                remarkReactComponents: {
-                  code: RemarkLowlight({ js }),
-                },
-              })
-              .processSync(this.state.text, {
-                breaks: true,
-                gfm: true,
-              }).contents
+            processor.processSync(this.state.text, {
+              breaks: true,
+              gfm: true,
+            }).contents
           }
         </div>
       </div>

@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import {
   Drawer,
   List,
@@ -11,13 +12,11 @@ import {
 import DeleteIcon from 'material-ui-icons/Delete';
 import { withStyles } from 'material-ui/styles';
 
-const drawerWidth = 240;
-
 const styles = theme => ({
   drawerPaper: {
     position: 'relative',
     height: '100%',
-    width: drawerWidth,
+    width: 240,
     backgroundColor: '#fafafa',
   },
   drawerHeader: { height: 48 },
@@ -26,15 +25,7 @@ const styles = theme => ({
   },
 });
 
-function generate(element) {
-  return [0, 1, 2].map(value =>
-    React.cloneElement(element, {
-      key: value,
-    }),
-  );
-}
-
-const SideBar = ({ classes }) => (
+const SideBar = connect(state => state.article)(({ classes, articles }) => (
   <Drawer
     type="permanent"
     classes={{
@@ -44,13 +35,17 @@ const SideBar = ({ classes }) => (
   >
     <div className={classes.drawerHeader} />
     <Divider />
-    <List>{generate(<Item classes={classes} />)}</List>
+    <List>
+      {articles.map(article => (
+        <Item key={article.id} classes={classes} {...article} />
+      ))}
+    </List>
   </Drawer>
-);
+));
 
-const Item = ({ classes }) => (
+const Item = ({ classes, date, title }) => (
   <ListItem button>
-    <ListItemText primary="Single-line item" />
+    <ListItemText primary={title} secondary={date} />
     <ListItemSecondaryAction>
       <IconButton className={classes.deleteIcon} aria-label="Delete">
         <DeleteIcon />
