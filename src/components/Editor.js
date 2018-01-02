@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { withStyles } from 'material-ui/styles';
 import remark from 'remark';
 import reactRenderer from 'remark-react';
@@ -67,11 +68,16 @@ class Editor extends React.Component {
   }
 
   render() {
-    const { classes } = this.props;
+    const { classes, editor } = this.props;
     return (
       <div className={classes.container}>
         <div className={classes.editor}>
-          <input className={classes.title} type="text" placeholder="Untitled" />
+          <input
+            className={classes.title}
+            type="text"
+            placeholder="Untitled"
+            value={editor.content.title}
+          />
           <textarea
             className={classes.textArea}
             value={this.state.text}
@@ -91,4 +97,4 @@ class Editor extends React.Component {
   }
 }
 
-export default withStyles(styles)(Editor);
+export default withStyles(styles)(connect(state => state)(Editor));

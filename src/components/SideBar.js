@@ -11,6 +11,7 @@ import {
 } from 'material-ui';
 import DeleteIcon from 'material-ui-icons/Delete';
 import { withStyles } from 'material-ui/styles';
+import { select } from '../reducers/editor';
 
 const styles = theme => ({
   drawerPaper: {
@@ -25,26 +26,41 @@ const styles = theme => ({
   },
 });
 
-const SideBar = connect(state => state.article)(({ classes, articles }) => (
-  <Drawer
-    type="permanent"
-    classes={{
-      paper: classes.drawerPaper,
-    }}
-    anchor="left"
-  >
-    <div className={classes.drawerHeader} />
-    <Divider />
-    <List>
-      {articles.map(article => (
-        <Item key={article.id} classes={classes} {...article} />
-      ))}
-    </List>
-  </Drawer>
-));
+function mapDispatchToProps(dispatch) {
+  return {
+    selectHandler: id => {
+      dispatch(select(id));
+    },
+  };
+}
 
-const Item = ({ classes, date, title }) => (
-  <ListItem button>
+const SideBar = connect(state => state.article, mapDispatchToProps)(
+  ({ classes, articles, selectHandler }) => (
+    <Drawer
+      type="permanent"
+      classes={{
+        paper: classes.drawerPaper,
+      }}
+      anchor="left"
+    >
+      <div className={classes.drawerHeader} />
+      <Divider />
+      <List>
+        {articles.map(article => (
+          <Item
+            key={article.id}
+            classes={classes}
+            {...article}
+            selectHandler={selectHandler}
+          />
+        ))}
+      </List>
+    </Drawer>
+  ),
+);
+
+const Item = ({ classes, id, date, title, selectHandler }) => (
+  <ListItem button onClick={() => selectHandler(id)}>
     <ListItemText primary={title} secondary={date} />
     <ListItemSecondaryAction>
       <IconButton className={classes.deleteIcon} aria-label="Delete">

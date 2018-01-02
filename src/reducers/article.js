@@ -12,13 +12,13 @@ const initialState = {
     },
     {
       id: 2,
-      date: '2018-01-02',
+      date: '2018-01-01',
       title: 'タイトル2',
       contents: '## hello world',
     },
     {
       id: 3,
-      date: '2018-01-03',
+      date: '2018-01-01',
       title: 'タイトル3',
       contents: '### hello world',
     },
