@@ -8,6 +8,7 @@ import breaksRenderer from 'remark-breaks';
 import RemarkLowlight from 'remark-react-lowlight';
 import js from 'highlight.js/lib/languages/javascript';
 
+import { changeTitle, changeContents } from '../reducers/editor';
 import './Editor.css';
 
 const styles = theme => ({
@@ -58,17 +59,16 @@ const processor = remark()
   });
 
 class Editor extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = { text: '# hello world' };
+  onChangeTitle(e) {
+    this.props.titleHandler(e.target.value);
   }
 
-  onChange(e) {
-    this.setState({ text: e.target.value });
+  onChangeContents(e) {
+    this.props.contentsHandler(e.target.value);
   }
 
   render() {
-    const { classes, editor } = this.props;
+    const { classes, title, contents } = this.props;
     return (
       <div className={classes.container}>
         <div className={classes.editor}>
@@ -76,17 +76,18 @@ class Editor extends React.Component {
             className={classes.title}
             type="text"
             placeholder="Untitled"
-            value={editor.content.title}
+            value={title}
+            onChange={this.onChangeTitle.bind(this)}
           />
           <textarea
             className={classes.textArea}
-            value={this.state.text}
-            onChange={this.onChange.bind(this)}
+            value={contents}
+            onChange={this.onChangeContents.bind(this)}
           />
         </div>
         <div id="preview" className={classes.preview}>
           {
-            processor.processSync(this.state.text, {
+            processor.processSync(contents, {
               breaks: true,
               gfm: true,
             }).contents
@@ -97,4 +98,17 @@ class Editor extends React.Component {
   }
 }
 
-export default withStyles(styles)(connect(state => state)(Editor));
+function mapDispatchToProps(dispatch) {
+  return {
+    titleHandler: title => {
+      dispatch(changeTitle(title));
+    },
+    contentsHandler: contents => {
+      dispatch(changeContents(contents));
+    },
+  };
+}
+
+export default withStyles(styles)(
+  connect(state => state.editor, mapDispatchToProps)(Editor),
+);
