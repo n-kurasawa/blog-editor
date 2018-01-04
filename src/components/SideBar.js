@@ -50,7 +50,7 @@ const SideBar = connect(state => state.article, mapDispatchToProps)(
           <Item
             key={article.id}
             classes={classes}
-            {...article}
+            article={article}
             selectHandler={selectHandler}
           />
         ))}
@@ -59,9 +59,9 @@ const SideBar = connect(state => state.article, mapDispatchToProps)(
   ),
 );
 
-const Item = ({ classes, id, date, title, selectHandler }) => (
-  <ListItem button onClick={() => selectHandler(id)}>
-    <ListItemText primary={title} secondary={date} />
+const Item = ({ classes, article, selectHandler }) => (
+  <ListItem button onClick={() => selectHandler(article)}>
+    <ListItemText primary={article.title} secondary={article.date} />
     <ListItemSecondaryAction>
       <IconButton className={classes.deleteIcon} aria-label="Delete">
         <DeleteIcon />
