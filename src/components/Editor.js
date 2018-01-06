@@ -58,46 +58,37 @@ const processor = remark()
     },
   });
 
-class Editor extends React.Component {
-  onChangeTitle(e) {
-    this.props.changeTitle(e.target.value);
-  }
-
-  onChangeContents(e) {
-    this.props.changeContents(e.target.value);
-  }
-
-  render() {
-    const { classes, title, contents } = this.props;
-    return (
-      <div className={classes.container}>
-        <div className={classes.editor}>
-          <input
-            className={classes.title}
-            type="text"
-            placeholder="Untitled"
-            value={title}
-            onChange={this.onChangeTitle.bind(this)}
-          />
-          <textarea
-            className={classes.textArea}
-            value={contents}
-            onChange={this.onChangeContents.bind(this)}
-          />
-        </div>
-        <div id="preview" className={classes.preview}>
-          {
-            processor.processSync(contents, {
-              breaks: true,
-              gfm: true,
-            }).contents
-          }
-        </div>
+const Editor = connect(state => state.editor, { changeTitle, changeContents })(
+  ({ classes, title, contents, changeTitle, changeContents }) => (
+    <div className={classes.container}>
+      <div className={classes.editor}>
+        <input
+          className={classes.title}
+          type="text"
+          placeholder="Untitled"
+          value={title}
+          onChange={e => {
+            changeTitle(e.target.value);
+          }}
+        />
+        <textarea
+          className={classes.textArea}
+          value={contents}
+          onChange={e => {
+            changeContents(e.target.value);
+          }}
+        />
       </div>
-    );
-  }
-}
-
-export default withStyles(styles)(
-  connect(state => state.editor, { changeTitle, changeContents })(Editor),
+      <div id="preview" className={classes.preview}>
+        {
+          processor.processSync(contents, {
+            breaks: true,
+            gfm: true,
+          }).contents
+        }
+      </div>
+    </div>
+  ),
 );
+
+export default withStyles(styles)(Editor);
