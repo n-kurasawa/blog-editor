@@ -14,11 +14,12 @@ const initialState = {
 export default function reducer(state = initialState, action = {}) {
   switch (action.type) {
     case EDITOR.SELECT:
+      const { id, date, title, contents } = action.article;
       return Object.assign({}, state, {
-        id: action.article.id,
-        date: action.article.date,
-        title: action.article.title,
-        contents: action.article.contents,
+        id,
+        date,
+        title,
+        contents,
       });
     case EDITOR.TITLE:
       return Object.assign({}, state, { title: action.title });
@@ -32,7 +33,7 @@ export default function reducer(state = initialState, action = {}) {
 export function select(article) {
   return {
     type: EDITOR.SELECT,
-    article: article,
+    article,
   };
 }
 

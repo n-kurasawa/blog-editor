@@ -26,16 +26,8 @@ const styles = theme => ({
   },
 });
 
-function mapDispatchToProps(dispatch) {
-  return {
-    selectHandler: id => {
-      dispatch(select(id));
-    },
-  };
-}
-
-const SideBar = connect(state => state.article, mapDispatchToProps)(
-  ({ classes, articles, selectHandler }) => (
+const SideBar = connect(state => state.article, { select })(
+  ({ classes, articles, select }) => (
     <Drawer
       type="permanent"
       classes={{
@@ -51,7 +43,7 @@ const SideBar = connect(state => state.article, mapDispatchToProps)(
             key={article.id}
             classes={classes}
             article={article}
-            selectHandler={selectHandler}
+            select={select}
           />
         ))}
       </List>
@@ -59,8 +51,8 @@ const SideBar = connect(state => state.article, mapDispatchToProps)(
   ),
 );
 
-const Item = ({ classes, article, selectHandler }) => (
-  <ListItem button onClick={() => selectHandler(article)}>
+const Item = ({ classes, article, select }) => (
+  <ListItem button onClick={() => select(article)}>
     <ListItemText primary={article.title} secondary={article.date} />
     <ListItemSecondaryAction>
       <IconButton className={classes.deleteIcon} aria-label="Delete">
