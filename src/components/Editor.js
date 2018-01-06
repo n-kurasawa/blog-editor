@@ -60,11 +60,11 @@ const processor = remark()
 
 class Editor extends React.Component {
   onChangeTitle(e) {
-    this.props.titleHandler(e.target.value);
+    this.props.changeTitle(e.target.value);
   }
 
   onChangeContents(e) {
-    this.props.contentsHandler(e.target.value);
+    this.props.changeContents(e.target.value);
   }
 
   render() {
@@ -98,17 +98,6 @@ class Editor extends React.Component {
   }
 }
 
-function mapDispatchToProps(dispatch) {
-  return {
-    titleHandler: title => {
-      dispatch(changeTitle(title));
-    },
-    contentsHandler: contents => {
-      dispatch(changeContents(contents));
-    },
-  };
-}
-
 export default withStyles(styles)(
-  connect(state => state.editor, mapDispatchToProps)(Editor),
+  connect(state => state.editor, { changeTitle, changeContents })(Editor),
 );
