@@ -23,76 +23,82 @@ export default class ArticleDb {
       });
     };
 
-    request.onsuccess = e => {
-      console.log('DB [ oepn ]: Success');
-      this.db = e.target.result;
-    };
+    return new Promise((resolve, reject) => {
+      request.onsuccess = e => {
+        console.log('DB [ oepn ]: Success');
+        this.db = e.target.result;
+        resolve();
+      };
 
-    request.onerror = e => {
-      console.log('DB [ oepn ]: Error, ' + e);
-    };
+      request.onerror = e => {
+        console.log('DB [ oepn ]: Error, ' + e);
+        reject(e);
+      };
+    });
   }
 
-  save(article, callback) {
-    if (this.db === null) {
-      return;
-    }
-    let request = this.store('readwrite').put(article);
-
-    request.onsuccess = e => {
-      article.id = e.target.result;
-      if (callback) {
-        callback(null, article);
+  save(article) {
+    return new Promise((resolve, reject) => {
+      if (this.db === null) {
+        console.error('db is null');
+        reject('db is null');
       }
-    };
 
-    request.onerror = e => {
-      console.error(e);
-      if (callback) {
-        callback(e, article);
-      }
-    };
+      let request = this.store('readwrite').put(article);
+
+      request.onsuccess = e => {
+        article.id = e.target.result;
+        resolve(article);
+      };
+
+      request.onerror = e => {
+        console.error(e);
+        reject(e);
+      };
+    });
   }
 
-  delete(id, callback) {
-    if (this.db === null) {
-      return;
-    }
-    let request = this.store('readwrite').delete(id);
-
-    request.onsuccess = e => {
-      if (callback) {
-        callback(null, id);
+  delete(id) {
+    return new Promise((resolve, reject) => {
+      if (this.db === null) {
+        console.error('db is null');
+        reject('db is null');
       }
-    };
 
-    request.onerror = e => {
-      if (callback) {
-        callback(e, id);
-      }
-    };
+      let request = this.store('readwrite').delete(id);
+
+      request.onsuccess = e => {
+        resolve(id);
+      };
+
+      request.onerror = e => {
+        reject(e, id);
+      };
+    });
   }
 
-  all(callback) {
-    if (this.db === null) {
-      return;
-    }
-    let request = this.store('readonly').openCursor();
-    let articles = [];
-    request.onsuccess = e => {
-      let cursor = e.target.result;
-      if (cursor) {
-        articles.push(cursor.value);
-        cursor.continue();
-      } else if (callback) {
-        callback(null, articles);
+  all() {
+    return new Promise((resolve, reject) => {
+      if (this.db === null) {
+        console.error('db is null');
+        reject('db is null');
       }
-    };
 
-    request.onerror = e => {
-      if (callback) {
-        callback(e);
-      }
-    };
+      let request = this.store('readonly').openCursor();
+      let articles = [];
+      request.onsuccess = e => {
+        let cursor = e.target.result;
+        if (cursor) {
+          articles.push(cursor.value);
+          cursor.continue();
+        } else {
+          resolve(articles);
+        }
+      };
+
+      request.onerror = e => {
+        reject(e);
+      };
+    });
   }
 }
