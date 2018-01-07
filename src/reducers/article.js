@@ -27,9 +27,19 @@ export default function reducer(state = initialState, action = {}) {
   switch (action.type) {
     case LOAD:
       return {
-        articles: action.results,
+        articles: action.articles,
       };
     default:
       return state;
   }
+}
+
+export function load() {
+  return (dispatch, getState, db) => {
+    return db.open().then(() => {
+      db.all().then(articles => {
+        dispatch({ type: LOAD, articles });
+      });
+    });
+  };
 }

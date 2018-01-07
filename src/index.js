@@ -7,10 +7,12 @@ import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
 import App from './App';
 import reducer from './reducers';
+import ArticleDb from './articledb';
 
 import './index.css';
 
-const store = createStore(reducer, applyMiddleware(thunk));
+const thunkWithClient = thunk.withExtraArgument(new ArticleDb());
+const store = createStore(reducer, applyMiddleware(thunkWithClient));
 
 const theme = createMuiTheme({
   palette: {

@@ -5,25 +5,25 @@ export default class ArticleDb {
     this.db = null;
   }
 
-  store(mode) {
-    let transaction = this.db.transaction(DB_STORE_NAME, mode);
-    let store = transaction.objectStore(DB_STORE_NAME);
-    return store;
-  }
-
   open() {
     let request = window.indexedDB.open('db', 1);
-    request.onupgradeneeded = e => {
-      console.log('DB [ oepn ]: Success, Upgrade');
-
-      let db = e.target.result;
-      db.createObjectStore(DB_STORE_NAME, {
-        keyPath: 'id',
-        autoIncrement: true,
-      });
-    };
 
     return new Promise((resolve, reject) => {
+      if (this.db) {
+        resolve();
+        return;
+      }
+
+      request.onupgradeneeded = e => {
+        console.log('DB [ oepn ]: Success, Upgrade');
+
+        let db = e.target.result;
+        db.createObjectStore(DB_STORE_NAME, {
+          keyPath: 'id',
+          autoIncrement: true,
+        });
+      };
+
       request.onsuccess = e => {
         console.log('DB [ oepn ]: Success');
         this.db = e.target.result;
@@ -37,11 +37,18 @@ export default class ArticleDb {
     });
   }
 
+  store(mode) {
+    let transaction = this.db.transaction(DB_STORE_NAME, mode);
+    let store = transaction.objectStore(DB_STORE_NAME);
+    return store;
+  }
+
   save(article) {
     return new Promise((resolve, reject) => {
       if (this.db === null) {
         console.error('db is null');
         reject('db is null');
+        return;
       }
 
       let request = this.store('readwrite').put(article);
@@ -63,6 +70,7 @@ export default class ArticleDb {
       if (this.db === null) {
         console.error('db is null');
         reject('db is null');
+        return;
       }
 
       let request = this.store('readwrite').delete(id);
@@ -82,6 +90,7 @@ export default class ArticleDb {
       if (this.db === null) {
         console.error('db is null');
         reject('db is null');
+        return;
       }
 
       let request = this.store('readonly').openCursor();
