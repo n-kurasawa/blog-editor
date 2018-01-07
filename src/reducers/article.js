@@ -1,26 +1,8 @@
 export const LOAD = 'article/load';
+export const SAVE = 'article/save';
 
 const initialState = {
-  articles: [
-    {
-      id: 1,
-      date: '2018-01-01',
-      title: 'タイトル1',
-      contents: '# hello world',
-    },
-    {
-      id: 2,
-      date: '2018-01-01',
-      title: 'タイトル2',
-      contents: '## hello world',
-    },
-    {
-      id: 3,
-      date: '2018-01-01',
-      title: 'タイトル3',
-      contents: '### hello world',
-    },
-  ],
+  articles: [],
 };
 
 export default function reducer(state = initialState, action = {}) {
@@ -39,6 +21,21 @@ export function load() {
     return db.open().then(() => {
       db.all().then(articles => {
         dispatch({ type: LOAD, articles });
+      });
+    });
+  };
+}
+
+export function addTestDate() {
+  const date = {
+    date: '2018-01-01',
+    title: 'タイトル1',
+    contents: '# hello world',
+  };
+  return (dispatch, getState, db) => {
+    return db.open().then(() => {
+      db.save(date).then(article => {
+        dispatch({ type: SAVE, article });
       });
     });
   };

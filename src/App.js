@@ -3,7 +3,7 @@ import Editor from './components/Editor';
 import Header from './components/Header';
 import SideBar from './components/SideBar';
 import { connect } from 'react-redux';
-import { load } from './reducers/article';
+import { load, addTestDate } from './reducers/article';
 
 const styles = {
   appFrame: {
@@ -16,6 +16,7 @@ const styles = {
 
 class App extends React.Component {
   componentDidMount() {
+    // this.props.addTestDate();
     this.props.load();
   }
 
@@ -32,4 +33,4 @@ class App extends React.Component {
   }
 }
 
-export default connect(null, { load })(App);
+export default connect(null, { load, addTestDate })(App);
