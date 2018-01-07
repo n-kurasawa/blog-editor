@@ -1,6 +1,4 @@
-export const ARTICLE = {
-  LOAD: 'article/load',
-};
+export const LOAD = 'article/load';
 
 const initialState = {
   articles: [
@@ -27,7 +25,7 @@ const initialState = {
 
 export default function reducer(state = initialState, action = {}) {
   switch (action.type) {
-    case ARTICLE.LOAD:
+    case LOAD:
       return {
         articles: action.results,
       };

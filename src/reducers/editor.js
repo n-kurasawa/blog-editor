@@ -1,8 +1,6 @@
-export const EDITOR = {
-  SELECT: 'editor/select',
-  TITLE: 'editor/title',
-  CONTENTS: 'editor/contents',
-};
+const SELECT = 'editor/select';
+const TITLE = 'editor/title';
+const CONTENTS = 'editor/contents';
 
 const initialState = {
   id: '',
@@ -13,7 +11,7 @@ const initialState = {
 
 export default function reducer(state = initialState, action = {}) {
   switch (action.type) {
-    case EDITOR.SELECT:
+    case SELECT:
       const { id, date, title, contents } = action.article;
       return Object.assign({}, state, {
         id,
@@ -21,9 +19,9 @@ export default function reducer(state = initialState, action = {}) {
         title,
         contents,
       });
-    case EDITOR.TITLE:
+    case TITLE:
       return Object.assign({}, state, { title: action.title });
-    case EDITOR.CONTENTS:
+    case CONTENTS:
       return Object.assign({}, state, { contents: action.contents });
     default:
       return state;
@@ -32,21 +30,21 @@ export default function reducer(state = initialState, action = {}) {
 
 export function select(article) {
   return {
-    type: EDITOR.SELECT,
+    type: SELECT,
     article,
   };
 }
 
 export function changeTitle(title) {
   return {
-    type: EDITOR.TITLE,
+    type: TITLE,
     title,
   };
 }
 
 export function changeContents(contents) {
   return {
-    type: EDITOR.CONTENTS,
+    type: CONTENTS,
     contents,
   };
 }
