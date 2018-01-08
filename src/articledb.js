@@ -6,14 +6,12 @@ export default class ArticleDb {
   }
 
   open() {
-    let request = window.indexedDB.open('db', 1);
-
     return new Promise((resolve, reject) => {
       if (this.db) {
         resolve();
         return;
       }
-
+      let request = window.indexedDB.open('db', 1);
       request.onupgradeneeded = e => {
         console.log('DB [ oepn ]: Success, Upgrade');
 

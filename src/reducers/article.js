@@ -11,6 +11,8 @@ export default function reducer(state = initialState, action = {}) {
       return {
         articles: action.articles,
       };
+    case SAVE:
+      return { articles: updateState(state.articles, action.article) };
     default:
       return state;
   }
@@ -28,15 +30,63 @@ export function load() {
 
 export function addTestDate() {
   const date = {
+    id: 3,
     date: '2018-01-01',
-    title: 'タイトル1',
+    title: 'タイトル3',
     contents: '# hello world',
   };
   return (dispatch, getState, db) => {
-    return db.open().then(() => {
+    db.open().then(() => {
       db.save(date).then(article => {
         dispatch({ type: SAVE, article });
       });
     });
   };
+}
+
+export function updateTitle(id, title) {
+  return (dispatch, getState, db) => {
+    const { article } = getState();
+    const i = updateIndex(article.articles, id);
+    if (i === -1) {
+      return;
+    }
+    article.articles[i].title = title;
+
+    db.open().then(() => {
+      db.save(article.articles[i]).then(article => {
+        dispatch({ type: SAVE, article });
+      });
+    });
+  };
+}
+
+export function updateContents(id, contents) {
+  return (dispatch, getState, db) => {
+    const { article } = getState();
+    const i = updateIndex(article.articles, id);
+    article.articles[i].contents = contents;
+
+    db.open().then(() => {
+      db.save(article.articles[i]).then(article => {
+        dispatch({ type: SAVE, article });
+      });
+    });
+  };
+}
+
+function updateState(articles, article) {
+  const i = updateIndex(articles, article.id);
+  if (i === -1) {
+    return [...articles, article];
+  } else {
+    articles[i] = article;
+    return articles;
+  }
+}
+
+function updateIndex(articles, id) {
+  return articles.findIndex(elm => {
+    return elm.id === id;
+  });
 }

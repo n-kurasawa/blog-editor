@@ -9,6 +9,7 @@ import RemarkLowlight from 'remark-react-lowlight';
 import js from 'highlight.js/lib/languages/javascript';
 
 import { changeTitle, changeContents } from '../reducers/editor';
+import { updateTitle, updateContents } from '../reducers/article';
 import './Editor.css';
 
 const styles = theme => ({
@@ -58,8 +59,22 @@ const processor = remark()
     },
   });
 
-const Editor = connect(state => state.editor, { changeTitle, changeContents })(
-  ({ classes, title, contents, changeTitle, changeContents }) => (
+const Editor = connect(state => state.editor, {
+  changeTitle,
+  changeContents,
+  updateTitle,
+  updateContents,
+})(
+  ({
+    classes,
+    id,
+    title,
+    contents,
+    changeTitle,
+    changeContents,
+    updateTitle,
+    updateContents,
+  }) => (
     <div className={classes.container}>
       <div className={classes.editor}>
         <input
@@ -69,6 +84,7 @@ const Editor = connect(state => state.editor, { changeTitle, changeContents })(
           value={title}
           onChange={e => {
             changeTitle(e.target.value);
+            updateTitle(id, e.target.value);
           }}
         />
         <textarea
@@ -76,6 +92,7 @@ const Editor = connect(state => state.editor, { changeTitle, changeContents })(
           value={contents}
           onChange={e => {
             changeContents(e.target.value);
+            updateContents(id, e.target.value);
           }}
         />
       </div>
