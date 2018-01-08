@@ -1,5 +1,6 @@
 export const LOAD = 'article/load';
 export const SAVE = 'article/save';
+export const REMOVE = 'article/remove';
 
 const initialState = {
   articles: [],
@@ -12,7 +13,9 @@ export default function reducer(state = initialState, action = {}) {
         articles: action.articles,
       };
     case SAVE:
-      return { articles: updateState(state.articles, action.article) };
+      return { articles: updateArticle(state.articles, action.article) };
+    case REMOVE:
+      return { articles: removeArticle(state.articles, action.id) };
     default:
       return state;
   }
@@ -40,6 +43,16 @@ export function add() {
         .then(article => {
           dispatch({ type: SAVE, article });
         });
+    });
+  };
+}
+
+export function remove(id) {
+  return (dispatch, getState, db) => {
+    db.open().then(() => {
+      db.delete(id).then(id => {
+        dispatch({ type: REMOVE, id });
+      });
     });
   };
 }
@@ -75,14 +88,22 @@ export function updateContents(id, contents) {
   };
 }
 
-function updateState(articles, article) {
+function updateArticle(articles, article) {
   const i = updateIndex(articles, article.id);
   if (i === -1) {
     return [...articles, article];
   } else {
-    articles[i] = article;
+    return [...articles.slice(0, i), article, ...articles.slice(i + 1)];
+  }
+}
+
+function removeArticle(articles, id) {
+  const i = updateIndex(articles, id);
+  if (i === -1) {
     return articles;
   }
+
+  return [...articles.slice(0, i), ...articles.slice(i + 1)];
 }
 
 function updateIndex(articles, id) {

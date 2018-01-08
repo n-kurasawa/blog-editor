@@ -13,7 +13,7 @@ import DeleteIcon from 'material-ui-icons/Delete';
 import AddIcon from 'material-ui-icons/Add';
 import { withStyles } from 'material-ui/styles';
 import { select } from '../reducers/editor';
-import { add } from '../reducers/article';
+import { add, remove } from '../reducers/article';
 
 const styles = theme => ({
   drawerPaper: {
@@ -28,8 +28,8 @@ const styles = theme => ({
   },
 });
 
-const SideBar = connect(state => state.article, { select, add })(
-  ({ classes, articles, select, add }) => (
+const SideBar = connect(state => state.article, { select, add, remove })(
+  ({ classes, articles, select, add, remove }) => (
     <Drawer
       type="permanent"
       classes={{
@@ -50,6 +50,7 @@ const SideBar = connect(state => state.article, { select, add })(
             classes={classes}
             article={article}
             select={select}
+            remove={remove}
           />
         ))}
       </List>
@@ -57,11 +58,17 @@ const SideBar = connect(state => state.article, { select, add })(
   ),
 );
 
-const Item = ({ classes, article, select }) => (
+const Item = ({ classes, article, select, remove }) => (
   <ListItem button onClick={() => select(article)}>
     <ListItemText primary={article.title} secondary={article.date} />
     <ListItemSecondaryAction>
-      <IconButton className={classes.deleteIcon} aria-label="Delete">
+      <IconButton
+        onClick={() => {
+          remove(article.id);
+        }}
+        className={classes.deleteIcon}
+        aria-label="Delete"
+      >
         <DeleteIcon />
       </IconButton>
     </ListItemSecondaryAction>
