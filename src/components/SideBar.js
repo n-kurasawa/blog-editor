@@ -13,6 +13,7 @@ import DeleteIcon from 'material-ui-icons/Delete';
 import AddIcon from 'material-ui-icons/Add';
 import { withStyles } from 'material-ui/styles';
 import { select } from '../reducers/editor';
+import { add } from '../reducers/article';
 
 const styles = theme => ({
   drawerPaper: {
@@ -27,8 +28,8 @@ const styles = theme => ({
   },
 });
 
-const SideBar = connect(state => state.article, { select })(
-  ({ classes, articles, select }) => (
+const SideBar = connect(state => state.article, { select, add })(
+  ({ classes, articles, select, add }) => (
     <Drawer
       type="permanent"
       classes={{
@@ -37,7 +38,7 @@ const SideBar = connect(state => state.article, { select })(
       anchor="left"
     >
       <div className={classes.drawerHeader}>
-        <IconButton aria-label="Add">
+        <IconButton onClick={add} aria-label="Add">
           <AddIcon />
         </IconButton>
       </div>

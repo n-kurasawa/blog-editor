@@ -28,18 +28,18 @@ export function load() {
   };
 }
 
-export function addTestDate() {
-  const date = {
-    id: 3,
-    date: '2018-01-01',
-    title: 'タイトル3',
-    contents: '# hello world',
-  };
+export function add() {
   return (dispatch, getState, db) => {
     db.open().then(() => {
-      db.save(date).then(article => {
-        dispatch({ type: SAVE, article });
-      });
+      db
+        .save({
+          date: getDate(),
+          title: '',
+          contents: '',
+        })
+        .then(article => {
+          dispatch({ type: SAVE, article });
+        });
     });
   };
 }
@@ -89,4 +89,19 @@ function updateIndex(articles, id) {
   return articles.findIndex(elm => {
     return elm.id === id;
   });
+}
+
+function getDate() {
+  const now = new Date();
+  return `${now.getFullYear()}-${format(now.getMonth() + 1)}-${format(
+    now.getDate(),
+  )}`;
+}
+
+function format(num) {
+  if (10 > num) {
+    return `0${num}`;
+  } else {
+    return num;
+  }
 }
