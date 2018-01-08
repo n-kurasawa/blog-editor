@@ -1,10 +1,11 @@
 {
-  "name": "blog-editor",
+  "name": "md-editor",
   "version": "1.0.0",
   "main": "main.js",
   "scripts": {
     "start": "electron .",
-    "lint": "eslint ./src"
+    "lint": "eslint ./src",
+    "package": "electron-packager ."
   },
   "license": "MIT",
   "devDependencies": {
@@ -15,6 +16,7 @@
     "babel-preset-react": "^6.24.1",
     "css-loader": "^0.28.7",
     "electron": "~1.7.8",
+    "electron-packager": "^10.1.1",
     "eslint": "^4.14.0",
     "style-loader": "^0.19.1",
     "webpack": "^3.10.0"

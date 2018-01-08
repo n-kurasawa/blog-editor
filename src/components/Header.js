@@ -1,6 +1,6 @@
 import React from 'react';
 import { withStyles } from 'material-ui/styles';
-import { AppBar, Toolbar, Icon, IconButton, Typography } from 'material-ui';
+import { AppBar, Toolbar, Icon, IconButton } from 'material-ui';
 
 const drawerWidth = 240;
 

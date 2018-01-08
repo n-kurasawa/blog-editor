@@ -16,7 +16,6 @@ const styles = {
 
 class App extends React.Component {
   componentDidMount() {
-    // this.props.addTestDate();
     this.props.load();
   }
 
