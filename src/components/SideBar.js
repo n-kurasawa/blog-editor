@@ -10,6 +10,7 @@ import {
   IconButton,
 } from 'material-ui';
 import DeleteIcon from 'material-ui-icons/Delete';
+import AddIcon from 'material-ui-icons/Add';
 import { withStyles } from 'material-ui/styles';
 import { select } from '../reducers/editor';
 
@@ -35,7 +36,11 @@ const SideBar = connect(state => state.article, { select })(
       }}
       anchor="left"
     >
-      <div className={classes.drawerHeader} />
+      <div className={classes.drawerHeader}>
+        <IconButton aria-label="Add">
+          <AddIcon />
+        </IconButton>
+      </div>
       <Divider />
       <List>
         {articles.map(article => (
