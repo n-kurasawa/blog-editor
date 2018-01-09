@@ -8,10 +8,15 @@ import thunk from 'redux-thunk';
 import App from './App';
 import reducer from './reducers';
 import ArticleDb from './articledb';
-
+import ArticleApi from './articleApi';
 import './index.css';
 
-const thunkWithClient = thunk.withExtraArgument(new ArticleDb());
+const client = {
+  db: new ArticleDb(),
+  api: new ArticleApi(),
+};
+
+const thunkWithClient = thunk.withExtraArgument(client);
 const store = createStore(reducer, applyMiddleware(thunkWithClient));
 
 const theme = createMuiTheme({

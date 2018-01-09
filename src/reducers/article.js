@@ -22,9 +22,9 @@ export default function reducer(state = initialState, action = {}) {
 }
 
 export function load() {
-  return (dispatch, getState, db) => {
-    return db.open().then(() => {
-      db.all().then(articles => {
+  return (dispatch, getState, client) => {
+    return client.db.open().then(() => {
+      client.db.all().then(articles => {
         dispatch({ type: LOAD, articles });
       });
     });
@@ -32,9 +32,9 @@ export function load() {
 }
 
 export function add() {
-  return (dispatch, getState, db) => {
-    db.open().then(() => {
-      db
+  return (dispatch, getState, client) => {
+    client.db.open().then(() => {
+      client.db
         .save({
           date: getDate(),
           title: '',
@@ -48,9 +48,9 @@ export function add() {
 }
 
 export function remove(id) {
-  return (dispatch, getState, db) => {
-    db.open().then(() => {
-      db.delete(id).then(id => {
+  return (dispatch, getState, client) => {
+    client.db.open().then(() => {
+      client.db.delete(id).then(id => {
         dispatch({ type: REMOVE, id });
       });
     });
@@ -58,7 +58,7 @@ export function remove(id) {
 }
 
 export function updateTitle(id, title) {
-  return (dispatch, getState, db) => {
+  return (dispatch, getState, client) => {
     const { article } = getState();
     const i = updateIndex(article.articles, id);
     if (i === -1) {
@@ -66,8 +66,8 @@ export function updateTitle(id, title) {
     }
     article.articles[i].title = title;
 
-    db.open().then(() => {
-      db.save(article.articles[i]).then(article => {
+    client.db.open().then(() => {
+      client.db.save(article.articles[i]).then(article => {
         dispatch({ type: SAVE, article });
       });
     });
@@ -75,13 +75,13 @@ export function updateTitle(id, title) {
 }
 
 export function updateContents(id, contents) {
-  return (dispatch, getState, db) => {
+  return (dispatch, getState, client) => {
     const { article } = getState();
     const i = updateIndex(article.articles, id);
     article.articles[i].contents = contents;
 
-    db.open().then(() => {
-      db.save(article.articles[i]).then(article => {
+    client.db.open().then(() => {
+      client.db.save(article.articles[i]).then(article => {
         dispatch({ type: SAVE, article });
       });
     });
