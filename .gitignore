@@ -3,3 +3,4 @@ node_modules
 dist
 *.log
 blog-editor-darwin-x64
+src/config/index.js
