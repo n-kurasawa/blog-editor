@@ -7,9 +7,18 @@ export default class ArticleApi {
     this.db = firebase.database();
   }
 
+  all() {
+    return this.db
+      .ref('articles')
+      .once('value')
+      .then(articles => {
+        return articles.val();
+      });
+  }
+
   put(article) {
     const { id, date, title, contents } = article;
-    this.db.ref('articles/' + id).set({
+    return this.db.ref('articles/' + id).set({
       date,
       title,
       contents,
