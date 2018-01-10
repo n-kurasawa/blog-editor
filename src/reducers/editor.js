@@ -12,17 +12,11 @@ const initialState = {
 export default function reducer(state = initialState, action = {}) {
   switch (action.type) {
     case SELECT:
-      const { id, date, title, contents } = action.article;
-      return Object.assign({}, state, {
-        id,
-        date,
-        title,
-        contents,
-      });
+      return { ...state, ...action.article };
     case TITLE:
-      return Object.assign({}, state, { title: action.title });
+      return { ...state, title: action.title };
     case CONTENTS:
-      return Object.assign({}, state, { contents: action.contents });
+      return { ...state, contents: action.contents };
     default:
       return state;
   }
