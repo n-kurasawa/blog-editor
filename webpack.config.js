@@ -5,13 +5,15 @@ module.exports = {
     filename: './dist/bundle.js',
   },
   module: {
-    loaders: [
+    rules: [
       {
         test: /\.js?$/,
         exclude: /node_modules/,
-        loader: 'babel-loader',
-        query: {
-          plugins: ['transform-react-jsx'],
+        use: {
+          loader: 'babel-loader',
+          options: {
+            presets: ['env', 'react'],
+          },
         },
       },
       {

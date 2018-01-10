@@ -4,6 +4,8 @@
   "main": "main.js",
   "scripts": {
     "start": "electron .",
+    "build": "webpack",
+    "watch": "webpack -w",
     "lint": "eslint ./src",
     "package": "electron-packager ."
   },
@@ -13,6 +15,7 @@
     "babel-eslint": "^8.1.2",
     "babel-loader": "^7.1.2",
     "babel-plugin-transform-react-jsx": "^6.24.1",
+    "babel-preset-env": "^1.6.1",
     "babel-preset-react": "^6.24.1",
     "css-loader": "^0.28.7",
     "electron": "~1.7.8",
