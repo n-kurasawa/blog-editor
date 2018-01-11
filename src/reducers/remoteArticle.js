@@ -26,7 +26,7 @@ export function remoteLoad() {
 export function upload(article) {
   return (dispatch, getState, client) => {
     client.api.put(article).then(() => {
-      dispatch({ type: UPLOAD, data });
+      dispatch({ type: UPLOAD });
     });
   };
 }
