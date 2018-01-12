@@ -1,3 +1,5 @@
+import { getNow } from '../utils/dateUtil';
+
 const LOAD = 'remoteArticle/load';
 const UPLOAD = 'remoteArticle/upload';
 
@@ -24,9 +26,10 @@ export function remoteLoad() {
 }
 
 export function upload(article) {
+  const uploadArticle = { ...article, date: getNow() };
   return (dispatch, getState, client) => {
-    client.api.put(article).then(() => {
-      dispatch({ type: UPLOAD });
+    client.api.put(uploadArticle).then(() => {
+      dispatch({ type: UPLOAD, article: uploadArticle });
     });
   };
 }

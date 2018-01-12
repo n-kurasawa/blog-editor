@@ -1,3 +1,5 @@
+import { getNow } from '../utils/dateUtil';
+
 export const LOAD = 'article/load';
 export const SAVE = 'article/save';
 export const REMOVE = 'article/remove';
@@ -36,7 +38,7 @@ export function add() {
     client.db.open().then(() => {
       client.db
         .save({
-          date: getDate(),
+          date: getNow(),
           title: '',
           contents: '',
         })
@@ -110,19 +112,4 @@ function updateIndex(articles, id) {
   return articles.findIndex(elm => {
     return elm.id === id;
   });
-}
-
-function getDate() {
-  const now = new Date();
-  return `${now.getFullYear()}-${format(now.getMonth() + 1)}-${format(
-    now.getDate(),
-  )}`;
-}
-
-function format(num) {
-  if (10 > num) {
-    return `0${num}`;
-  } else {
-    return num;
-  }
 }
