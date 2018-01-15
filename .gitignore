@@ -2,5 +2,5 @@ node_modules
 .idea
 dist
 *.log
-blog-editor-darwin-x64
+md-editor-darwin-x64/
 src/config/index.js
