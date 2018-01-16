@@ -29,7 +29,7 @@ export default class ArticleDb {
       };
 
       request.onerror = e => {
-        console.log('DB [ oepn ]: Error, ' + e);
+        console.error('DB [ oepn ]: Error, ' + e.target.error.message);
         reject(e);
       };
     });
