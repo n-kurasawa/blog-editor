@@ -9,7 +9,6 @@ import App from './App';
 import reducer from './reducers';
 import ArticleDb from './articledb';
 import ArticleApi from './articleApi';
-import './index.css';
 
 const client = {
   db: new ArticleDb(),
