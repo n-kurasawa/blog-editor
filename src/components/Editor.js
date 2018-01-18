@@ -1,6 +1,5 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { withStyles } from 'material-ui/styles';
 import remark from 'remark';
 import reactRenderer from 'remark-react';
 import breaksRenderer from 'remark-breaks';
@@ -10,46 +9,7 @@ import js from 'highlight.js/lib/languages/javascript';
 
 import { changeTitle, changeContents } from '../reducers/editor';
 import { updateTitle, updateContents } from '../reducers/article';
-import './Editor.css';
-
-const styles = theme => ({
-  container: {
-    display: 'flex',
-    width: '100%',
-    padding: theme.spacing.unit,
-    height: 'calc(98% - 56px)',
-    marginTop: 56,
-    [theme.breakpoints.up('sm')]: {
-      height: 'calc(100% - 48px)',
-      marginTop: 48,
-    },
-  },
-  title: {
-    width: '95%',
-    border: 0,
-    borderBottom: '1px solid rgba(0, 0, 0, 0.12)',
-    fontSize: 22,
-    padding: 10,
-    marginBottom: 10,
-  },
-  editor: {
-    width: '50%',
-    height: '97%',
-    borderRight: '1px solid rgba(0, 0, 0, 0.12)',
-  },
-  textArea: {
-    width: '99%',
-    height: '90%',
-    resize: 'none',
-    fontSize: 14,
-    border: 0,
-  },
-  preview: {
-    padding: 10,
-    width: '50%',
-    height: '97%',
-  },
-});
+import styles from './Editor.css';
 
 const processor = remark()
   .use(breaksRenderer)
@@ -66,7 +26,6 @@ const Editor = connect(state => state.editor, {
   updateContents,
 })(
   ({
-    classes,
     id,
     title,
     contents,
@@ -75,10 +34,10 @@ const Editor = connect(state => state.editor, {
     updateTitle,
     updateContents,
   }) => (
-    <div className={classes.container}>
-      <div className={classes.editor}>
+    <div className={styles.container}>
+      <div className={styles.editor}>
         <input
-          className={classes.title}
+          className={styles.title}
           type="text"
           placeholder="Untitled"
           value={title}
@@ -88,7 +47,7 @@ const Editor = connect(state => state.editor, {
           }}
         />
         <textarea
-          className={classes.textArea}
+          className={styles.textArea}
           value={contents}
           onChange={e => {
             changeContents(e.target.value);
@@ -96,7 +55,7 @@ const Editor = connect(state => state.editor, {
           }}
         />
       </div>
-      <div id="preview" className={classes.preview}>
+      <div id="preview" className={styles.preview}>
         {
           processor.processSync(contents, {
             breaks: true,
@@ -108,4 +67,4 @@ const Editor = connect(state => state.editor, {
   ),
 );
 
-export default withStyles(styles)(Editor);
+export default Editor;

@@ -1,3 +1,38 @@
 h1, p {
     font-family: Lato;
 }
+
+.container {
+  display: flex;
+  width: 100%;
+  padding: 8px;
+  height: calc(98% - 56px);
+  margin-top: 56px;
+  height: calc(100% - 48px);
+  margin-top: 48px;
+}
+.title {
+  width: 95%;
+  border: 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+  font-size: 22px;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+.editor {
+  width: 50%;
+  height: 97%;
+  border-right: 1px solid rgba(0, 0, 0, 0.12);
+}
+.textArea {
+  width: 99%;
+  height: 90%;
+  resize: none;
+  font-size: 14px;
+  border: 0;
+}
+.preview {
+  padding: 10px;
+  width: 50%;
+  height: 97%;
+}
