@@ -1,0 +1,13 @@
+.appBar {
+  width: calc(100% - 240px);
+  margin-left: 240px;
+  position: absolute;
+  background-color: #fafafa;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+  z-index: 1100;
+  text-align: right;
+}
+
+.btn {
+  margin-right: 15px;
+}
