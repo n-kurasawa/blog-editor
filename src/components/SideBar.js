@@ -11,33 +11,20 @@ import {
 } from 'material-ui';
 import DeleteIcon from 'material-ui-icons/Delete';
 import AddIcon from 'material-ui-icons/Add';
-import { withStyles } from 'material-ui/styles';
 import { select } from '../reducers/editor';
 import { add, remove } from '../reducers/article';
-
-const styles = theme => ({
-  drawerPaper: {
-    position: 'relative',
-    height: '100%',
-    width: 240,
-    backgroundColor: '#fafafa',
-  },
-  drawerHeader: { height: 48 },
-  deleteIcon: {
-    fontSize: 18,
-  },
-});
+import styles from './SideBar.css';
 
 const SideBar = connect(state => state.article, { select, add, remove })(
-  ({ classes, articles, select, add, remove }) => (
+  ({ articles, select, add, remove }) => (
     <Drawer
       type="permanent"
       classes={{
-        paper: classes.drawerPaper,
+        paper: styles.drawerPaper,
       }}
       anchor="left"
     >
-      <div className={classes.drawerHeader}>
+      <div className={styles.drawerHeader}>
         <IconButton onClick={add} aria-label="Add">
           <AddIcon />
         </IconButton>
@@ -47,7 +34,6 @@ const SideBar = connect(state => state.article, { select, add, remove })(
         {articles.map(article => (
           <Item
             key={article.id}
-            classes={classes}
             article={article}
             select={select}
             remove={remove}
@@ -58,7 +44,7 @@ const SideBar = connect(state => state.article, { select, add, remove })(
   ),
 );
 
-const Item = ({ classes, article, select, remove }) => (
+const Item = ({ article, select, remove }) => (
   <ListItem button onClick={() => select(article)}>
     <ListItemText primary={article.title} secondary={article.date} />
     <ListItemSecondaryAction>
@@ -66,7 +52,6 @@ const Item = ({ classes, article, select, remove }) => (
         onClick={() => {
           remove(article.id);
         }}
-        className={classes.deleteIcon}
         aria-label="Delete"
       >
         <DeleteIcon />
@@ -75,4 +60,4 @@ const Item = ({ classes, article, select, remove }) => (
   </ListItem>
 );
 
-export default withStyles(styles)(SideBar);
+export default SideBar;
