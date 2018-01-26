@@ -5,5 +5,9 @@
   background-color: #fafafa !important;
 }
 .drawerHeader {
-  height: 48px
+  display: flex;
+  height: 48px;
+}
+.switch {
+  width: calc(240px - 48px);
 }

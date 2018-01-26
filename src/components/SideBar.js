@@ -9,6 +9,9 @@ import {
   Divider,
   IconButton,
 } from 'material-ui';
+import BottomNavigation, {
+  BottomNavigationButton,
+} from 'material-ui/BottomNavigation';
 import DeleteIcon from 'material-ui-icons/Delete';
 import AddIcon from 'material-ui-icons/Add';
 import { select } from '../reducers/editor';
@@ -25,9 +28,10 @@ const SideBar = connect(state => state.article, { select, add, remove })(
       anchor="left"
     >
       <div className={styles.drawerHeader}>
-        <IconButton onClick={add} aria-label="Add">
+        <IconButton className={styles.add} onClick={add} aria-label="Add">
           <AddIcon />
         </IconButton>
+        <SimpleBottomNavigation />
       </div>
       <Divider />
       <List>
@@ -59,5 +63,32 @@ const Item = ({ article, select, remove }) => (
     </ListItemSecondaryAction>
   </ListItem>
 );
+
+class SimpleBottomNavigation extends React.Component {
+  state = {
+    value: 0,
+  };
+
+  handleChange = (event, value) => {
+    this.setState({ value });
+  };
+
+  render() {
+    const { value } = this.state;
+
+    return (
+      <BottomNavigation
+        className={styles.switch}
+        style={{ height: 'inherit', backgroundColor: 'inherit' }}
+        value={value}
+        onChange={this.handleChange}
+        showLabels
+      >
+        <BottomNavigationButton label="Local" />
+        <BottomNavigationButton label="Remote" />
+      </BottomNavigation>
+    );
+  }
+}
 
 export default SideBar;
