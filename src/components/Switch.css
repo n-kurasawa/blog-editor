@@ -1,0 +1,5 @@
+.switch {
+  width: calc(240px - 48px);
+  height: inherit !important;
+  background-color: inherit !important;
+}

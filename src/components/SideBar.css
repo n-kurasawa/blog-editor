@@ -8,6 +8,3 @@
   display: flex;
   height: 48px;
 }
-.switch {
-  width: calc(240px - 48px);
-}
