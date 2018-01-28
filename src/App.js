@@ -4,7 +4,6 @@ import Header from './components/Header';
 import SideBar from './components/SideBar';
 import { connect } from 'react-redux';
 import { load } from './reducers/article';
-import { remoteLoad } from './reducers/remoteArticle';
 
 const styles = {
   appFrame: {
@@ -18,7 +17,6 @@ const styles = {
 class App extends React.Component {
   componentDidMount() {
     this.props.load();
-    this.props.remoteLoad();
   }
 
   render() {
