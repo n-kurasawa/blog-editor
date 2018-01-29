@@ -32,4 +32,4 @@ class App extends React.Component {
   }
 }
 
-export default connect(null, { load, remoteLoad })(App);
+export default connect(null, { load })(App);

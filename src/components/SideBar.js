@@ -11,7 +11,6 @@ import {
 } from 'material-ui';
 import DeleteIcon from 'material-ui-icons/Delete';
 import AddIcon from 'material-ui-icons/Add';
-import Switch from './Switch';
 import { select } from '../reducers/editor';
 import { add, remove } from '../reducers/article';
 import styles from './SideBar.css';
@@ -29,7 +28,6 @@ const SideBar = connect(state => state.article, { select, add, remove })(
         <IconButton className={styles.add} onClick={add} aria-label="Add">
           <AddIcon />
         </IconButton>
-        <Switch />
       </div>
       <Divider />
       <List>
