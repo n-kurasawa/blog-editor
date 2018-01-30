@@ -11,9 +11,7 @@ const initialState = {
 export default function reducer(state = initialState, action = {}) {
   switch (action.type) {
     case LOAD:
-      return {
-        articles: action.articles,
-      };
+      return { articles: action.articles };
     case SAVE:
       return { articles: updateArticle(state.articles, action.article) };
     case REMOVE:
