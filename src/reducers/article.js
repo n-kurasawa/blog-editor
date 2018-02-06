@@ -23,36 +23,30 @@ export default function reducer(state = initialState, action = {}) {
 
 export function load() {
   return (dispatch, getState, client) => {
-    return client.db.open().then(() => {
-      client.db.all().then(articles => {
-        dispatch({ type: LOAD, articles });
-      });
+    client.db.all().then(articles => {
+      dispatch({ type: LOAD, articles });
     });
   };
 }
 
 export function add() {
   return (dispatch, getState, client) => {
-    client.db.open().then(() => {
-      client.db
-        .save({
-          date: getNow(),
-          title: '',
-          contents: '',
-        })
-        .then(article => {
-          dispatch({ type: SAVE, article });
-        });
-    });
+    client.db
+      .save({
+        date: getNow(),
+        title: '',
+        contents: '',
+      })
+      .then(article => {
+        dispatch({ type: SAVE, article });
+      });
   };
 }
 
 export function remove(id) {
   return (dispatch, getState, client) => {
-    client.db.open().then(() => {
-      client.db.delete(id).then(id => {
-        dispatch({ type: REMOVE, id });
-      });
+    client.db.delete(id).then(id => {
+      dispatch({ type: REMOVE, id });
     });
   };
 }
@@ -66,10 +60,8 @@ export function updateTitle(id, title) {
     }
     article.articles[i].title = title;
 
-    client.db.open().then(() => {
-      client.db.save(article.articles[i]).then(article => {
-        dispatch({ type: SAVE, article });
-      });
+    client.db.save(article.articles[i]).then(article => {
+      dispatch({ type: SAVE, article });
     });
   };
 }
@@ -80,10 +72,8 @@ export function updateContents(id, contents) {
     const i = updateIndex(article.articles, id);
     article.articles[i].contents = contents;
 
-    client.db.open().then(() => {
-      client.db.save(article.articles[i]).then(article => {
-        dispatch({ type: SAVE, article });
-      });
+    client.db.save(article.articles[i]).then(article => {
+      dispatch({ type: SAVE, article });
     });
   };
 }
