@@ -4,11 +4,7 @@ export const LOAD = 'article/load';
 export const SAVE = 'article/save';
 export const REMOVE = 'article/remove';
 
-const initialState = {
-  articles: [],
-};
-
-export default function reducer(state = initialState, action = {}) {
+export default function reducer(state = { articles: [] }, action = {}) {
   switch (action.type) {
     case LOAD:
       return { articles: action.articles };
