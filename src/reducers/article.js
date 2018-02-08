@@ -1,8 +1,8 @@
 import { getNow } from '../utils/dateUtil';
 
-export const LOAD = 'article/load';
-export const SAVE = 'article/save';
-export const REMOVE = 'article/remove';
+const LOAD = 'article/load';
+const SAVE = 'article/save';
+const REMOVE = 'article/remove';
 
 export default function reducer(state = { articles: [] }, action = {}) {
   switch (action.type) {
