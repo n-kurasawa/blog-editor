@@ -46,15 +46,17 @@ const SideBar = connect(state => state.article, { select, add, remove })(
 
 const Item = ({ article, select, remove }) => (
   <ListItem button onClick={() => select(article)}>
-    <ListItemText primary={article.title} secondary={article.date} />
+    <i className={`${styles.check} material-icons`}>check</i>
+    <ListItemText className={styles.text} primary={article.title} secondary={article.date} />
     <ListItemSecondaryAction>
       <IconButton
+        className={styles.deleteButton}
         onClick={() => {
           remove(article.id);
         }}
         aria-label="Delete"
       >
-        <DeleteIcon />
+        <DeleteIcon className={styles.deleteIcon} />
       </IconButton>
     </ListItemSecondaryAction>
   </ListItem>
