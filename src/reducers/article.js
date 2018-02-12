@@ -21,6 +21,16 @@ export function load() {
   return (dispatch, getState, client) => {
     client.db.all().then(articles => {
       dispatch({ type: LOAD, articles });
+
+      client.api.all().then(remoteArticles => {
+        const uploadedIds = remoteArticles.map(article => article.id);
+        articles = articles.map(article => {
+          article.uploaded = uploadedIds.includes(article.id);
+          return article;
+        });
+
+        dispatch({ type: LOAD, articles });
+      });
     });
   };
 }

@@ -37,7 +37,6 @@ const SideBar = connect(state => state.article, { select, add, remove })(
             article={article}
             select={select}
             remove={remove}
-            uploaded={true}
           />
         ))}
       </List>
@@ -45,9 +44,9 @@ const SideBar = connect(state => state.article, { select, add, remove })(
   ),
 );
 
-const Item = ({ article, select, remove, uploaded }) => (
+const Item = ({ article, select, remove }) => (
   <ListItem button onClick={() => select(article)}>
-    {uploaded ? (
+    {article.uploaded ? (
       <i className={`${styles.check} material-icons`}>check</i>
     ) : null}
     <ListItemText
