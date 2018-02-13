@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Icon, IconButton } from 'material-ui';
-import { upload } from '../reducers/remoteArticle';
+import { upload } from '../reducers/article';
 import styles from './Header.css';
 
 const Header = connect(state => state, { upload })(({ upload, editor }) => (

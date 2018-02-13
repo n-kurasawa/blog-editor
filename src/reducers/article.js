@@ -3,6 +3,7 @@ import { getNow } from '../utils/dateUtil';
 const LOAD = 'article/load';
 const SAVE = 'article/save';
 const REMOVE = 'article/remove';
+const UPLOAD = 'article/upload';
 
 export default function reducer(state = { articles: [] }, action = {}) {
   switch (action.type) {
@@ -80,6 +81,15 @@ export function updateContents(id, contents) {
 
     client.db.save(article.articles[i]).then(article => {
       dispatch({ type: SAVE, article });
+    });
+  };
+}
+
+export function upload(article) {
+  const uploadArticle = { ...article, date: getNow() };
+  return (dispatch, getState, client) => {
+    client.api.put(uploadArticle).then(() => {
+      dispatch({ type: UPLOAD, article: uploadArticle });
     });
   };
 }
