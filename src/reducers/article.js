@@ -24,9 +24,15 @@ export function load() {
       dispatch({ type: LOAD, articles });
 
       client.api.all().then(remoteArticles => {
-        const uploadedIds = remoteArticles.map(article => article.id);
+        const uploadedHash = remoteArticles.reduce((previous, current) => {
+          previous[current.id] = current;
+          return previous;
+        }, {});
+
         articles = articles.map(article => {
-          article.uploaded = uploadedIds.includes(article.id);
+          if (uploadedHash[article.id]) {
+            article.uploaded = uploadedHash[article.id].date;
+          }
           return article;
         });
 
@@ -86,7 +92,10 @@ export function updateContents(id, contents) {
 }
 
 export function upload(article) {
-  const uploadArticle = { ...article, date: getNow() };
+  const uploadArticle = article.uploaded
+    ? { ...article, date: article.uploaded }
+    : { ...article, date: getNow() };
+
   return (dispatch, getState, client) => {
     client.api.put(uploadArticle).then(() => {
       dispatch({ type: UPLOAD, article: uploadArticle });
