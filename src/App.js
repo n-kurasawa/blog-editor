@@ -5,14 +5,7 @@ import SideBar from './components/SideBar';
 import { connect } from 'react-redux';
 import { load } from './reducers/article';
 
-const styles = {
-  appFrame: {
-    position: 'relative',
-    display: 'flex',
-    width: '100%',
-    height: '100%',
-  },
-};
+import styles from './App.css';
 
 class App extends React.Component {
   componentDidMount() {
@@ -23,7 +16,7 @@ class App extends React.Component {
     return (
       <React.Fragment>
         <Header />
-        <div style={styles.appFrame}>
+        <div className={styles.appFrame}>
           <SideBar />
           <Editor />
         </div>
