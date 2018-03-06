@@ -18,6 +18,16 @@ h1, p {
   padding: 10px;
   margin-bottom: 10px;
 }
+
+.tag {
+  width: 95%;
+  border: 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+  font-size: 14px;
+  padding: 0 10px 10px 10px;
+  margin-bottom: 10px;
+}
+
 .editor {
   width: 50%;
   height: 97%;

@@ -49,6 +49,7 @@ const Editor = connect(state => state.editor, {
             updateTitle(id, e.target.value);
           }}
         />
+        <input className={styles.tag} type="text" placeholder="tag" />
         <textarea
           className={styles.textArea}
           value={contents}
