@@ -8,7 +8,7 @@ import emoji from 'remark-emoji';
 import RemarkLowlight from 'remark-react-lowlight';
 import js from 'highlight.js/lib/languages/javascript';
 
-import { changeTitle, changeContents } from '../reducers/editor';
+import { changeTitle, changeContents, changeTags } from '../reducers/editor';
 import { updateTitle, updateContents } from '../reducers/article';
 import styles from './Editor.css';
 
@@ -25,6 +25,7 @@ const processor = remark()
 const Editor = connect(state => state.editor, {
   changeTitle,
   changeContents,
+  changeTags,
   updateTitle,
   updateContents,
 })(
@@ -32,8 +33,10 @@ const Editor = connect(state => state.editor, {
     id,
     title,
     contents,
+    tags,
     changeTitle,
     changeContents,
+    changeTags,
     updateTitle,
     updateContents,
   }) => (
@@ -49,7 +52,15 @@ const Editor = connect(state => state.editor, {
             updateTitle(id, e.target.value);
           }}
         />
-        <input className={styles.tag} type="text" placeholder="tag" />
+        <input
+          className={styles.tag}
+          value={tags}
+          onChange={e => {
+            changeTags(e.target.value);
+          }}
+          type="text"
+          placeholder="tag"
+        />
         <textarea
           className={styles.textArea}
           value={contents}
