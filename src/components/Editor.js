@@ -9,7 +9,7 @@ import RemarkLowlight from 'remark-react-lowlight';
 import js from 'highlight.js/lib/languages/javascript';
 
 import { changeTitle, changeContents, changeTags } from '../reducers/editor';
-import { updateTitle, updateContents } from '../reducers/article';
+import { updateTitle, updateContents, updateTags } from '../reducers/article';
 import styles from './Editor.css';
 
 const processor = remark()
@@ -28,6 +28,7 @@ const Editor = connect(state => state.editor, {
   changeTags,
   updateTitle,
   updateContents,
+  updateTags,
 })(
   ({
     id,
@@ -39,6 +40,7 @@ const Editor = connect(state => state.editor, {
     changeTags,
     updateTitle,
     updateContents,
+    updateTags,
   }) => (
     <div className={styles.container}>
       <div className={styles.editor}>
@@ -57,6 +59,7 @@ const Editor = connect(state => state.editor, {
           value={tags}
           onChange={e => {
             changeTags(e.target.value);
+            updateTags(id, e.target.value);
           }}
           type="text"
           placeholder="tag"

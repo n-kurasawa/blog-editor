@@ -49,6 +49,7 @@ export function add() {
         date: getNow(),
         title: '',
         contents: '',
+        tags: '',
       })
       .then(article => {
         dispatch({ type: SAVE, article });
@@ -84,6 +85,18 @@ export function updateContents(id, contents) {
     const { article } = getState();
     const i = updateIndex(article.articles, id);
     article.articles[i].contents = contents;
+
+    client.db.save(article.articles[i]).then(article => {
+      dispatch({ type: SAVE, article });
+    });
+  };
+}
+
+export function updateTags(id, tags) {
+  return (dispatch, getState, client) => {
+    const { article } = getState();
+    const i = updateIndex(article.articles, id);
+    article.articles[i].tags = tags;
 
     client.db.save(article.articles[i]).then(article => {
       dispatch({ type: SAVE, article });
