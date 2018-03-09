@@ -14,7 +14,7 @@ const initialState = {
 export default function reducer(state = initialState, action = {}) {
   switch (action.type) {
     case SELECT:
-      return { ...state, ...action.article };
+      return { ...initialState, ...action.article };
     case TITLE:
       return { ...state, title: action.title };
     case CONTENTS:
