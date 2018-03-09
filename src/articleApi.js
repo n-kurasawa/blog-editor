@@ -28,12 +28,13 @@ export default class ArticleApi {
   }
 
   put(article) {
-    const { id, date, title, contents } = article;
+    const { id, date, title, contents, tags } = article;
     return this.db.ref('articles/' + id).set({
       id,
       date,
       title,
       contents,
+      tags,
     });
   }
 }
