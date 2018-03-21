@@ -24,10 +24,13 @@ export function load() {
       dispatch({ type: LOAD, articles });
 
       client.api.all().then(remoteArticles => {
-        const uploadedHash = remoteArticles.reduce((previous, current) => {
-          previous[current.id] = current;
-          return previous;
-        }, {});
+        const uploadedHash = Object.values(remoteArticles).reduce(
+          (previous, current) => {
+            previous[current.id] = current;
+            return previous;
+          },
+          {},
+        );
 
         articles = articles.map(article => {
           if (uploadedHash[article.id]) {
