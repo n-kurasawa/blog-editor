@@ -22,67 +22,68 @@ const processor = remark()
   })
   .use(emoji);
 
-const Editor = connect(state => state.editor, {
-  changeTitle,
-  changeContents,
-  changeTags,
-  updateTitle,
-  updateContents,
-  updateTags,
-})(
-  ({
-    id,
-    title,
-    contents,
-    tags,
-    changeTitle,
-    changeContents,
-    changeTags,
-    updateTitle,
-    updateContents,
-    updateTags,
-  }) => (
-    <div className={styles.container}>
-      <div className={styles.editor}>
-        <input
-          className={styles.title}
-          type="text"
-          placeholder="Untitled"
-          value={title}
-          onChange={e => {
-            changeTitle(e.target.value);
-            updateTitle(id, e.target.value);
-          }}
-        />
-        <input
-          className={styles.tag}
-          value={tags}
-          onChange={e => {
-            changeTags(e.target.value);
-            updateTags(id, e.target.value);
-          }}
-          type="text"
-          placeholder="tag"
-        />
-        <textarea
-          className={styles.textArea}
-          value={contents}
-          onChange={e => {
-            changeContents(e.target.value);
-            updateContents(id, e.target.value);
-          }}
-        />
-      </div>
-      <div id="preview" className={styles.preview}>
-        {
-          processor.processSync(contents, {
-            breaks: true,
-            gfm: true,
-          }).contents
-        }
-      </div>
+const Editor = connect(state => state.editor)(({ contents }) => (
+  <div className={styles.container}>
+    <div className={styles.editor}>
+      <TitleInput />
+      <TagInput />
+      <ContentInput />
     </div>
-  ),
-);
+    <div id="preview" className={styles.preview}>
+      {
+        processor.processSync(contents, {
+          breaks: true,
+          gfm: true,
+        }).contents
+      }
+    </div>
+  </div>
+));
+
+const TitleInput = connect(state => state.editor, {
+  changeTitle,
+  updateTitle,
+})(({ id, title, changeTitle, updateTitle }) => (
+  <input
+    className={styles.title}
+    type="text"
+    placeholder="Untitled"
+    value={title}
+    onChange={e => {
+      changeTitle(e.target.value);
+      updateTitle(id, e.target.value);
+    }}
+  />
+));
+
+const TagInput = connect(state => state.editor, {
+  changeTags,
+  updateTags,
+})(({ id, tags, changeTags, updateTags }) => (
+  <input
+    className={styles.tag}
+    value={tags}
+    onChange={e => {
+      changeTags(e.target.value);
+      updateTags(id, e.target.value);
+    }}
+    type="text"
+    placeholder="tag"
+  />
+));
+
+const ContentInput = connect(state => state.editor, {
+  changeContents,
+  updateContents,
+})(({ id, contents, changeContents, updateContents }) => (
+  <textarea
+    className={styles.textArea}
+    value={contents}
+    onChange={e => {
+      changeContents(e.target.value);
+      updateContents(id, e.target.value);
+    }}
+  />
+));
 
 export default Editor;
