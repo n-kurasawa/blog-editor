@@ -1,5 +1,5 @@
 import React from 'react';
-import Editor from './components/Editor';
+import Editor from './components/editor';
 import Header from './components/Header';
 import SideBar from './components/SideBar';
 import { connect } from 'react-redux';

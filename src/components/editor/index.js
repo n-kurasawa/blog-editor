@@ -8,9 +8,13 @@ import emoji from 'remark-emoji';
 import RemarkLowlight from 'remark-react-lowlight';
 import js from 'highlight.js/lib/languages/javascript';
 
-import { changeTitle, changeContents, changeTags } from '../reducers/editor';
-import { updateTitle, updateContents, updateTags } from '../reducers/article';
-import styles from './Editor.css';
+import { changeTitle, changeContents, changeTags } from '../../reducers/editor';
+import {
+  updateTitle,
+  updateContents,
+  updateTags,
+} from '../../reducers/article';
+import styles from './index.css';
 
 const processor = remark()
   .use(breaksRenderer)
