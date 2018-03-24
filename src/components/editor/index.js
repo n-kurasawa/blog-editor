@@ -24,21 +24,25 @@ const processor = remark()
   })
   .use(emoji);
 
-const Editor = connect(state => state.editor)(({ contents }) => (
+const Editor = () => (
   <div className={styles.container}>
     <div className={styles.editor}>
       <Title />
       <Tag />
       <Content />
     </div>
-    <div id="preview" className={styles.preview}>
-      {
-        processor.processSync(contents, {
-          breaks: true,
-          gfm: true,
-        }).contents
-      }
-    </div>
+    <Preview />
+  </div>
+);
+
+const Preview = connect(state => state.editor)(({ contents }) => (
+  <div id="preview" className={styles.preview}>
+    {
+      processor.processSync(contents, {
+        breaks: true,
+        gfm: true,
+      }).contents
+    }
   </div>
 ));
 
