@@ -8,12 +8,10 @@ import emoji from 'remark-emoji';
 import RemarkLowlight from 'remark-react-lowlight';
 import js from 'highlight.js/lib/languages/javascript';
 
-import { changeTitle, changeContents, changeTags } from '../../reducers/editor';
-import {
-  updateTitle,
-  updateContents,
-  updateTags,
-} from '../../reducers/article';
+import Title from './title';
+import Tag from './tag';
+import Content from './content';
+
 import styles from './index.css';
 
 const processor = remark()
@@ -29,9 +27,9 @@ const processor = remark()
 const Editor = connect(state => state.editor)(({ contents }) => (
   <div className={styles.container}>
     <div className={styles.editor}>
-      <TitleInput />
-      <TagInput />
-      <ContentInput />
+      <Title />
+      <Tag />
+      <Content />
     </div>
     <div id="preview" className={styles.preview}>
       {
@@ -42,52 +40,6 @@ const Editor = connect(state => state.editor)(({ contents }) => (
       }
     </div>
   </div>
-));
-
-const TitleInput = connect(state => state.editor, {
-  changeTitle,
-  updateTitle,
-})(({ id, title, changeTitle, updateTitle }) => (
-  <input
-    className={styles.title}
-    type="text"
-    placeholder="Untitled"
-    value={title}
-    onChange={e => {
-      changeTitle(e.target.value);
-      updateTitle(id, e.target.value);
-    }}
-  />
-));
-
-const TagInput = connect(state => state.editor, {
-  changeTags,
-  updateTags,
-})(({ id, tags, changeTags, updateTags }) => (
-  <input
-    className={styles.tag}
-    value={tags}
-    onChange={e => {
-      changeTags(e.target.value);
-      updateTags(id, e.target.value);
-    }}
-    type="text"
-    placeholder="tag"
-  />
-));
-
-const ContentInput = connect(state => state.editor, {
-  changeContents,
-  updateContents,
-})(({ id, contents, changeContents, updateContents }) => (
-  <textarea
-    className={styles.textArea}
-    value={contents}
-    onChange={e => {
-      changeContents(e.target.value);
-      updateContents(id, e.target.value);
-    }}
-  />
 ));
 
 export default Editor;
