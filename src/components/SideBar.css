@@ -21,3 +21,8 @@
 .deleteIcon {
   font-size: 14px;
 }
+
+.list {
+  overflow: auto;
+  height: 0;
+}

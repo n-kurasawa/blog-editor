@@ -30,7 +30,7 @@ const SideBar = connect(state => state.article, { select, add, remove })(
         </IconButton>
       </div>
       <Divider />
-      <List>
+      <List className={styles.list}>
         {articles.map(article => (
           <Item
             key={article.id}
